@@ -2,109 +2,134 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 
 function LandingPage() {
-  const [integrityScore, setIntegrityScore] = useState(37)
+  const [integrityScore, setIntegrityScore] = useState(87)
 
   const randomizeIntegrity = () => {
-    setIntegrityScore(Math.floor(Math.random() * 31) + 10) // 10-40%
+    // Random between 60-95 for that "mostly trustworthy" look
+    setIntegrityScore(Math.floor(Math.random() * 35) + 60)
   }
 
   return (
     <div className="landing-page">
-      {/* Government Header */}
-      <header className="gov-header">
-        <h1>🗳️ Department of Democracy</h1>
-        <p style={{textAlign: 'center', color: '#ffd700', marginTop: '10px'}}>
-          Official Election Portal™ (Not Actually Official)
-        </p>
-      </header>
-
       {/* Hero Section */}
-      <div className="glass-panel hero">
-        <h2 className="hero-title" style={{color: 'white', textAlign: 'center', marginBottom: '20px'}}>
-          WELCOME TO THE MOST TRUSTWORTHY ELECTION SYSTEM™
-        </h2>
-        <p className="hero-subtitle" style={{color: 'white', textAlign: 'center'}}>
-          Built with absolutely no confidence.
-        </p>
+      <div className="official-card">
+        <div style={{textAlign: 'center', marginBottom: '30px'}}>
+          <i className="fas fa-vote-yea" style={{fontSize: '4rem', color: '#1a3c6e'}}></i>
+          <h1 style={{fontSize: '2.5rem', color: '#0a1e3d', margin: '20px 0 10px'}}>
+            Your Vote Matters
+          </h1>
+          <p style={{fontSize: '1.2rem', color: '#4a4a4a'}}>
+            Participate in the democratic process. Every voice counts.
+          </p>
+        </div>
         
         {/* Integrity Score */}
-        <div className="integrity-score">
-          <p style={{color: 'white'}}>Election Integrity Score:</p>
-          <div className="score-bar">
+        <div className="integrity-meter">
+          <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
+            <h3 style={{margin: 0}}>
+              <i className="fas fa-shield-alt"></i> System Integrity
+            </h3>
+            <span style={{fontWeight: 'bold', color: '#1a3c6e'}}>{integrityScore}%</span>
+          </div>
+          <div className="integrity-bar">
             <div 
-              className="score-fill" 
+              className="integrity-fill" 
               style={{width: `${integrityScore}%`}}
             />
           </div>
-          <p className="score-number">{integrityScore}% (click to recalculate)</p>
+          <p className="hint" style={{textAlign: 'center', cursor: 'pointer'}} onClick={randomizeIntegrity}>
+            Click to verify integrity
+          </p>
         </div>
 
         {/* CTA Buttons */}
         <div style={{textAlign: 'center', margin: '30px 0'}}>
-            <Link to="/register" className="btn btn-secondary">
-                📝 REGISTER TO VOTE
-            </Link>
-            <Link to="/login" className="btn btn-secondary" style={{marginLeft: '10px'}}>
-                🔑 LOGIN
-            </Link>
-        </div>
-
-        {/* Parody Warning */}
-        <div className="warning-box">
-          <p className="blink">
-            ⚠️ THIS IS A PARODY. THIS IS NOT AN OFFICIAL VOTING SYSTEM.
-          </p>
-          <p>
-            DO NOT USE THESE RESULTS TO MAKE REAL-WORLD DECISIONS.
-          </p>
-          <p>
-            This system is about as secure as a screen door on a submarine.
-          </p>
+          <Link to="/register" className="btn btn-primary" style={{marginRight: '10px'}}>
+            <i className="fas fa-user-plus"></i> Register to Vote
+          </Link>
+          <Link to="/vote" className="btn btn-gold" style={{marginRight: '10px'}}>
+            <i className="fas fa-vote-yea"></i> Vote Now
+          </Link>
+          <Link to="/create" className="btn btn-secondary">
+            <i className="fas fa-plus-circle"></i> Create Election
+          </Link>
         </div>
       </div>
 
-      {/* Ticker */}
-      <div className="ticker">
-        <div className="marquee">
-          🔒 SECURE 🔒 BLOCKCHAIN™ 🔒 ENCRYPTED* 🔒 TRUST US** 🔒 
-          *probably not | **definitely not | ***The Pigeon is watching
+      {/* Official Notice */}
+      <div className="official-notice warning">
+        <p>
+          <i className="fas fa-exclamation-triangle"></i>
+          <strong> OFFICIAL NOTICE:</strong> The Department of Democracy is committed to 
+          maintaining the highest standards of electoral integrity. Our systems are regularly 
+          audited by independent contractors. <em>(Results may vary. Contractors may be Brian.)</em>
+        </p>
+      </div>
+
+      {/* Stats */}
+      <div className="stat-grid">
+        <div className="stat-card">
+          <div className="stat-value">98.2%</div>
+          <div className="stat-label">Voter Satisfaction*</div>
+          <div className="hint">*Of voters who survived the process</div>
+        </div>
+        <div className="stat-card">
+          <div className="stat-value">12</div>
+          <div className="stat-label">Security Layers</div>
+          <div className="hint">All decorative</div>
+        </div>
+        <div className="stat-card">
+          <div className="stat-value">100%</div>
+          <div className="stat-label">Democracy</div>
+          <div className="hint">Terms and conditions apply</div>
         </div>
       </div>
 
-      {/* Sample Candidates */}
-      <div className="glass-panel" style={{marginTop: '30px'}}>
-        <h2 style={{color: 'white', textAlign: 'center', marginBottom: '20px'}}>
+      {/* Current Election */}
+      <div className="official-card">
+        <h2 style={{textAlign: 'center', marginBottom: '20px'}}>
           Current Election: Supreme Leader of the Internet
         </h2>
+        <p style={{textAlign: 'center', color: '#6b7280'}}>
+          Cast your vote for the future of digital democracy
+        </p>
+        
         <div className="candidate-grid">
           <div className="candidate-card">
-            <span className="candidate-emoji">👨</span>
-            <h3 style={{color: 'white'}}>Uncle Bob</h3>
-            <p style={{color: '#ffd700'}}>The Sensible Choice™</p>
+            <div className="candidate-avatar">
+              <i className="fas fa-user-tie"></i>
+            </div>
+            <h3>Uncle Bob</h3>
+            <p>Experienced Leadership for a Digital Age</p>
           </div>
+          
           <div className="candidate-card">
-            <span className="candidate-emoji">🐦</span>
-            <h3 style={{color: 'white'}}>The Pigeon</h3>
-            <p style={{color: '#ffd700'}}>Has been eyeing that statue all week</p>
+            <div className="candidate-avatar">
+              <i className="fas fa-dove"></i>
+            </div>
+            <h3>The Pigeon</h3>
+            <p>A Fresh Perspective on Urban Affairs</p>
           </div>
+          
           <div className="candidate-card">
-            <span className="candidate-emoji">💻</span>
-            <h3 style={{color: 'white'}}>The CSS Developer</h3>
-            <p style={{color: '#ffd700'}}>Will center the div, probably</p>
+            <div className="candidate-avatar">
+              <i className="fas fa-code"></i>
+            </div>
+            <h3>The CSS Developer</h3>
+            <p>Will Center the Div, Probably</p>
           </div>
         </div>
       </div>
 
-      {/* Footer */}
-      <footer style={{textAlign: 'center', marginTop: '30px', color: 'white'}}>
-        <p>© 2026 Department of Democracy. All rights reserved. Or not.</p>
-        <p style={{fontSize: '0.8em', marginTop: '10px'}}>
-          BLOCKCHAIN™ | ENCRYPTED* | SECURE** | TRUST US***
+      {/* Subtle Warning */}
+      <div className="official-notice">
+        <p>
+          <i className="fas fa-info-circle"></i>
+          <strong> Note:</strong> This is a parody website for educational and entertainment 
+          purposes only. Please do not use this platform for actual elections. 
+          <em> Unless you really want to see what happens when Brian is in charge.</em>
         </p>
-        <p style={{fontSize: '0.7em'}}>
-          *probably not | **definitely not | ***please don't
-        </p>
-      </footer>
+      </div>
     </div>
   )
 }

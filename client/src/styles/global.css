@@ -1,6 +1,27 @@
 /* 🗳️ TOTALLY REAL™ ELECTION SYSTEM */
-/* Government + Frutiger Aero Aesthetic */
-/* "We're professional... but also we made this in 2009" */
+/* Official Government Portal Aesthetic */
+/* "Trust us. We're professionals." */
+
+:root {
+  /* Official Government Colors */
+  --primary-navy: #0a1e3d;
+  --secondary-blue: #1a3c6e;
+  --accent-blue: #2c5aa0;
+  --official-red: #8b1a1a;
+  --gold-accent: #c9a84c;
+  --white: #ffffff;
+  --off-white: #f5f7fa;
+  --text-dark: #1a1a1a;
+  --text-medium: #4a4a4a;
+  --text-light: #6b7280;
+  
+  /* Subtle Aero Hints */
+  --glass-bg: rgba(255, 255, 255, 0.85);
+  --glass-border: rgba(255, 255, 255, 0.3);
+  --soft-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  --hover-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+  --gradient-subtle: linear-gradient(135deg, #f5f7fa 0%, #e8edf5 100%);
+}
 
 * {
   margin: 0;
@@ -8,312 +29,454 @@
   box-sizing: border-box;
 }
 
-:root {
-  /* Government Official Colors */
-  --gov-blue: #1a3c6e;
-  --gov-navy: #0f2557;
-  --gov-red: #b22234;
-  --gov-white: #ffffff;
-  
-  /* Frutiger Aero Colors */
-  --aero-glass: rgba(255, 255, 255, 0.3);
-  --aero-glass-border: rgba(255, 255, 255, 0.5);
-  --aero-gloss: rgba(255, 255, 255, 0.6);
-  --aero-blue: #4a9eff;
-  --aero-cyan: #00d4ff;
-  --aero-green: #7ec850;
-  --aero-sunlight: #ffd700;
-  
-  /* Gradients */
-  --aero-gradient: linear-gradient(135deg, #4a9eff 0%, #00d4ff 50%, #7ec850 100%);
-  --glass-gradient: linear-gradient(135deg, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0.1) 100%);
-}
-
 body {
-  font-family: 'Segoe UI', 'Arial', sans-serif;
-  background: linear-gradient(180deg, #1a3c6e 0%, #4a9eff 50%, #87ceeb 100%);
-  min-height: 100vh;
-  position: relative;
-  overflow-x: hidden;
+  font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  background: var(--off-white);
+  color: var(--text-dark);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
 }
 
-/* Add subtle bubbles for that Aero feel */
-body::before {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: 
-    radial-gradient(circle at 20% 20%, rgba(255,255,255,0.1) 0%, transparent 50%),
-    radial-gradient(circle at 80% 40%, rgba(255,255,255,0.08) 0%, transparent 40%),
-    radial-gradient(circle at 50% 80%, rgba(255,255,255,0.12) 0%, transparent 45%);
-  pointer-events: none;
-  z-index: 0;
+/* 🏛️ OFFICIAL HEADER */
+.gov-header {
+  background: var(--primary-navy);
+  color: var(--white);
+  padding: 0;
+  border-bottom: 4px solid var(--gold-accent);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-.app {
+.gov-header-top {
+  background: var(--secondary-blue);
+  padding: 8px 0;
+  font-size: 0.85rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.gov-header-top .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.gov-header-main {
+  padding: 20px 0;
+}
+
+.gov-header-main .container {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.gov-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.gov-logo-icon {
+  width: 50px;
+  height: 50px;
+  background: var(--gold-accent);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary-navy);
+  font-size: 1.5rem;
+  box-shadow: 0 2px 10px rgba(201, 168, 76, 0.3);
+}
+
+.gov-title h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  line-height: 1.2;
+}
+
+.gov-title p {
+  font-size: 0.85rem;
+  color: #b8c4d8;
+  font-style: italic;
+}
+
+/* 📱 NAVIGATION */
+.gov-nav {
+  background: var(--secondary-blue);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.gov-nav .container {
+  display: flex;
+  gap: 0;
+}
+
+.gov-nav a {
+  color: var(--white);
+  text-decoration: none;
+  padding: 12px 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  border-bottom: 3px solid transparent;
+}
+
+.gov-nav a:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-bottom-color: var(--gold-accent);
+}
+
+.gov-nav a.active {
+  background: rgba(255, 255, 255, 0.1);
+  border-bottom-color: var(--gold-accent);
+}
+
+/* 📦 CONTAINER */
+.container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 20px;
-  position: relative;
-  z-index: 1;
+  padding: 0 20px;
 }
 
-/* 🏛️ GOVERNMENT HEADER STYLES */
-.gov-header {
-  background: var(--gov-navy);
-  border-bottom: 4px solid var(--gov-red);
-  padding: 20px;
+/* 📄 MAIN CONTENT */
+.main-content {
+  padding: 40px 0;
+}
+
+/* 🎴 CARDS & PANELS */
+.official-card {
+  background: var(--white);
+  border-radius: 8px;
+  box-shadow: var(--soft-shadow);
+  padding: 30px;
   margin-bottom: 30px;
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-}
-
-.gov-header h1 {
-  color: var(--gov-white);
-  font-size: 2.5em;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  text-align: center;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-}
-
-/* 💎 FRUTIGER AERO GLASS EFFECTS */
-.glass-panel {
-  background: var(--glass-gradient);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid var(--aero-glass-border);
-  border-radius: 15px;
-  padding: 20px;
-  box-shadow: 
-    0 8px 32px rgba(0,0,0,0.1),
-    inset 0 1px 0 rgba(255,255,255,0.4);
-  position: relative;
-}
-
-/* Glossy highlight effect */
-.glass-panel::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 50%;
-  background: linear-gradient(180deg, rgba(255,255,255,0.3) 0%, transparent 100%);
-  border-radius: 15px 15px 0 0;
-  pointer-events: none;
-}
-
-/* Glossy buttons */
-.btn {
-  display: inline-block;
-  padding: 12px 24px;
-  border-radius: 25px;
-  border: 1px solid var(--aero-glass-border);
-  background: var(--glass-gradient);
-  color: white;
-  font-weight: bold;
-  text-decoration: none;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 
-    0 4px 15px rgba(0,0,0,0.2),
-    inset 0 1px 0 rgba(255,255,255,0.5);
+  border: 1px solid #e1e8f0;
   position: relative;
   overflow: hidden;
 }
 
-/* Glossy button highlight */
-.btn::before {
+.official-card::before {
   content: '';
   position: absolute;
   top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-  transition: left 0.5s;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--gradient-subtle);
 }
 
-.btn:hover::before {
-  left: 100%;
+.official-card h2 {
+  color: var(--primary-navy);
+  font-size: 1.8rem;
+  margin-bottom: 15px;
+  font-weight: 600;
 }
 
-.btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 
-    0 6px 20px rgba(0,0,0,0.3),
-    inset 0 1px 0 rgba(255,255,255,0.5);
+.official-card h3 {
+  color: var(--secondary-blue);
+  font-size: 1.3rem;
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+
+.official-card p {
+  color: var(--text-medium);
+  margin-bottom: 15px;
+}
+
+/* 🔘 BUTTONS */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border: none;
+  letter-spacing: 0.3px;
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, #4a9eff, #0066cc);
-  font-size: 1.2em;
+  background: var(--secondary-blue);
+  color: var(--white);
+  box-shadow: 0 2px 8px rgba(26, 60, 110, 0.3);
+}
+
+.btn-primary:hover {
+  background: var(--accent-blue);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(26, 60, 110, 0.4);
 }
 
 .btn-secondary {
-  background: linear-gradient(135deg, #7ec850, #4a9eff);
+  background: var(--white);
+  color: var(--secondary-blue);
+  border: 2px solid var(--secondary-blue);
 }
 
-/* 📊 INTEGRITY SCORE BAR */
-.integrity-score {
-  text-align: center;
-  margin: 30px 0;
-  padding: 20px;
+.btn-secondary:hover {
+  background: var(--off-white);
+  transform: translateY(-2px);
+  box-shadow: var(--hover-shadow);
 }
 
-.score-bar {
+.btn-gold {
+  background: var(--gold-accent);
+  color: var(--primary-navy);
+  box-shadow: 0 2px 8px rgba(201, 168, 76, 0.3);
+}
+
+.btn-gold:hover {
+  background: #b8983f;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(201, 168, 76, 0.4);
+}
+
+/* 📋 FORMS */
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  color: var(--text-dark);
+  font-weight: 600;
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
   width: 100%;
-  max-width: 400px;
-  height: 25px;
-  background: rgba(0,0,0,0.2);
-  border-radius: 15px;
-  margin: 10px auto;
-  overflow: hidden;
-  border: 1px solid var(--aero-glass-border);
-  box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
+  padding: 12px;
+  border: 2px solid #d1d8e0;
+  border-radius: 4px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  background: var(--white);
+  color: var(--text-dark);
 }
 
-.score-fill {
-  height: 100%;
-  background: var(--aero-gradient);
-  border-radius: 15px;
-  transition: width 0.5s ease;
-  box-shadow: 
-    0 0 10px rgba(255,255,255,0.5),
-    inset 0 1px 0 rgba(255,255,255,0.5);
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--secondary-blue);
+  box-shadow: 0 0 0 3px rgba(26, 60, 110, 0.1);
 }
 
-.score-number {
-  color: white;
-  font-weight: bold;
-  text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+.form-group .hint {
+  font-size: 0.8rem;
+  color: var(--text-light);
+  margin-top: 4px;
 }
 
-/* ⚠️ WARNING BOX */
-.warning-box {
-  background: rgba(178, 34, 52, 0.8);
-  border: 2px solid #ffd700;
-  border-radius: 10px;
+.form-group .hint-warning {
+  font-size: 0.8rem;
+  color: var(--official-red);
+  margin-top: 4px;
+  font-style: italic;
+}
+
+/* ⚠️ NOTICES */
+.official-notice {
+  background: #fef9e7;
+  border-left: 4px solid var(--gold-accent);
   padding: 15px;
   margin: 20px 0;
-  color: white;
-  text-align: center;
-  box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+  border-radius: 0 4px 4px 0;
 }
 
-.warning-box p {
-  margin: 5px 0;
+.official-notice.warning {
+  background: #fdf2f2;
+  border-left-color: var(--official-red);
 }
 
-/* 🎠 MARQUEE TICKER */
-.ticker {
-  background: var(--gov-navy);
-  border: 2px solid var(--aero-glass-border);
-  border-radius: 5px;
-  padding: 10px;
+.official-notice p {
+  margin: 0;
+  color: var(--text-dark);
+  font-size: 0.9rem;
+}
+
+/* 📊 STATS */
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
   margin: 20px 0;
-  overflow: hidden;
 }
 
-.marquee {
-  overflow: hidden;
-  white-space: nowrap;
-  animation: marquee 20s linear infinite;
-  color: #ffd700;
-  font-weight: bold;
+.stat-card {
+  background: var(--gradient-subtle);
+  padding: 20px;
+  border-radius: 6px;
+  text-align: center;
+  border: 1px solid #e1e8f0;
 }
 
-@keyframes marquee {
-  0% { transform: translateX(100%); }
-  100% { transform: translateX(-100%); }
+.stat-card .stat-value {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--primary-navy);
+  line-height: 1;
 }
 
-/* 👥 CANDIDATE CARDS */
+.stat-card .stat-label {
+  font-size: 0.85rem;
+  color: var(--text-medium);
+  margin-top: 8px;
+}
+
+/* 🗳️ CANDIDATE CARDS */
 .candidate-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 20px;
   margin: 20px 0;
 }
 
 .candidate-card {
-  background: var(--glass-gradient);
-  backdrop-filter: blur(10px);
-  border: 1px solid var(--aero-glass-border);
-  border-radius: 15px;
-  padding: 20px;
-  text-align: center;
+  background: var(--white);
+  border: 2px solid #e1e8f0;
+  border-radius: 6px;
+  padding: 25px;
   transition: all 0.3s ease;
+  cursor: pointer;
   position: relative;
-  overflow: hidden;
 }
 
-.candidate-card::before {
+.candidate-card:hover {
+  border-color: var(--secondary-blue);
+  box-shadow: var(--hover-shadow);
+  transform: translateY(-3px);
+}
+
+.candidate-card.selected {
+  border-color: var(--gold-accent);
+  background: #fefbf5;
+  box-shadow: 0 0 0 3px rgba(201, 168, 76, 0.2);
+}
+
+.candidate-avatar {
+  width: 80px;
+  height: 80px;
+  background: var(--gradient-subtle);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 15px;
+  color: var(--secondary-blue);
+  font-size: 2rem;
+  border: 3px solid var(--white);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.candidate-card h3 {
+  text-align: center;
+  color: var(--primary-navy);
+  margin-bottom: 5px;
+}
+
+.candidate-card p {
+  text-align: center;
+  color: var(--text-medium);
+  font-size: 0.9rem;
+  margin-bottom: 0;
+}
+
+/* 📈 PROGRESS BARS */
+.integrity-meter {
+  background: var(--white);
+  padding: 20px;
+  border-radius: 6px;
+  border: 1px solid #e1e8f0;
+  margin: 20px 0;
+}
+
+.integrity-bar {
+  width: 100%;
+  height: 20px;
+  background: #e1e8f0;
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 10px 0;
+  position: relative;
+}
+
+.integrity-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--secondary-blue), var(--accent-blue));
+  border-radius: 10px;
+  transition: width 0.5s ease;
+  position: relative;
+}
+
+.integrity-fill::after {
   content: '';
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   height: 50%;
-  background: linear-gradient(180deg, rgba(255,255,255,0.3) 0%, transparent 100%);
-  border-radius: 15px 15px 0 0;
-  pointer-events: none;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 10px 10px 0 0;
 }
 
-.candidate-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+/* 📱 FOOTER */
+.gov-footer {
+  background: var(--primary-navy);
+  color: var(--white);
+  padding: 40px 0 20px;
+  margin-top: 60px;
+  border-top: 4px solid var(--gold-accent);
 }
 
-.candidate-emoji {
-  font-size: 4em;
-  display: block;
-  margin: 10px 0;
-  filter: drop-shadow(0 5px 10px rgba(0,0,0,0.3));
+.gov-footer h4 {
+  color: var(--white);
+  margin-bottom: 15px;
+  font-size: 1rem;
 }
 
-/* ✨ ANIMATIONS */
-@keyframes blink {
-  50% { opacity: 0; }
+.gov-footer p {
+  color: #b8c4d8;
+  font-size: 0.85rem;
+  margin-bottom: 10px;
 }
 
-.blink {
-  animation: blink 1s step-end infinite;
+.gov-footer .fine-print {
+  font-size: 0.75rem;
+  color: #8a9bb5;
+  font-style: italic;
 }
 
-/* 💧 Bubble effects */
-.bubble {
-  position: absolute;
-  background: rgba(255,255,255,0.2);
-  border-radius: 50%;
-  pointer-events: none;
-  animation: float 6s ease-in-out infinite;
-}
-
-@keyframes float {
-  0%, 100% { transform: translateY(0) rotate(0deg); }
-  50% { transform: translateY(-20px) rotate(180deg); }
-}
-
-/* 📱 RESPONSIVE */
+/* 🎯 RESPONSIVE */
 @media (max-width: 768px) {
-  .gov-header h1 {
-    font-size: 1.8em;
+  .gov-header-main .container {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .gov-nav .container {
+    flex-direction: column;
+  }
+  
+  .gov-nav a {
+    text-align: center;
+    padding: 10px;
   }
   
   .candidate-grid {
     grid-template-columns: 1fr;
   }
   
-  .btn {
-    display: block;
-    text-align: center;
-    margin: 10px 0;
+  .stat-grid {
+    grid-template-columns: 1fr;
   }
 }
