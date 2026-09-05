@@ -9,6 +9,7 @@ import VotePage from './pages/VotePage'
 import CreateElectionPage from './pages/CreateElectionPage'
 import PollDetailPage from './pages/PollDetailPage'
 import ResultsPage from './pages/ResultsPage'
+import BrowseElectionsPage from './pages/BrowseElectionsPage'
 import './styles/global.css'
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
               <Route path="/create" element={<CreateElectionPage />} />
               <Route path="/poll/:id" element={<PollDetailPage />} />
               <Route path="/results" element={<ResultsPage />} />
+              <Route path="/browse" element={<BrowseElectionsPage />} />
             </Routes>
           </div>
         </main>

@@ -34,6 +34,9 @@ function Header() {
           <Link to="/vote" className={location.pathname === '/vote' ? 'active' : ''}>
             <i className="fas fa-vote-yea"></i> Vote Now
           </Link>
+          <Link to="/browse" className={location.pathname === '/browse' ? 'active' : ''}>
+            <i className="fas fa-list"></i> Browse
+          </Link>
           <Link to="/create" className={location.pathname === '/create' ? 'active' : ''}>
             <i className="fas fa-plus-circle"></i> Create Election
           </Link>
