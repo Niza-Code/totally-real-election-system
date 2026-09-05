@@ -41,12 +41,12 @@ function LandingPage() {
 
         {/* CTA Buttons */}
         <div style={{textAlign: 'center', margin: '30px 0'}}>
-          <Link to="/vote" className="btn btn-primary">
-            🗳️ VOTE NOW
-          </Link>
-          <Link to="/create" className="btn btn-secondary" style={{marginLeft: '10px'}}>
-            📝 CREATE YOUR OWN ELECTION
-          </Link>
+            <Link to="/register" className="btn btn-secondary">
+                📝 REGISTER TO VOTE
+            </Link>
+            <Link to="/login" className="btn btn-secondary" style={{marginLeft: '10px'}}>
+                🔑 LOGIN
+            </Link>
         </div>
 
         {/* Parody Warning */}

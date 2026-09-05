@@ -1,5 +1,8 @@
 const express = require('express');
 const cors = require('cors');
+const { initializeDatabase } = require('./database');
+const authRoutes = require('./routes/auth');
+
 const app = express();
 const PORT = process.env.PORT || 3001;
 
@@ -7,24 +10,27 @@ const PORT = process.env.PORT || 3001;
 app.use(cors()); // Allow EVERYONE. We're not gatekeeping democracy.
 app.use(express.json()); // Parse JSON bodies
 
-// Basic route - the health check of questionable integrity
+// Initialize database
+initializeDatabase();
+
+// Basic route
 app.get('/', (req, res) => {
   res.json({
     message: '🗳️ Totally Real™ Election System API',
     status: 'Running (probably)',
     integrity: '37%',
-    brian: 'Currently unplugging something'
+    brian: 'Currently unplugging something',
+    endpoints: {
+      register: 'POST /api/auth/register',
+      login: 'POST /api/auth/login',
+      forgot_password: 'GET /api/auth/forgot-password/:username',
+      all_users: 'GET /api/auth/all-users'
+    }
   });
 });
 
-// Test route for voting (temporary)
-app.get('/api/ping', (req, res) => {
-  res.json({
-    message: 'pong',
-    timestamp: new Date().toISOString(),
-    votes_lost_during_ping: Math.floor(Math.random() * 47)
-  });
-});
+// Use authentication routes
+app.use('/api/auth', authRoutes);
 
 // Start server
 app.listen(PORT, () => {
@@ -32,4 +38,5 @@ app.listen(PORT, () => {
   console.log(`🔒 Security level: None`);
   console.log(`🐦 The Pigeon is watching`);
   console.log(`⚠️ Brian is somewhere near a power cable`);
+  console.log(`📝 Registration open: Everyone welcome (literally anyone)`);
 });
