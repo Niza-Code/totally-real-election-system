@@ -1,26 +1,232 @@
+/* 🗳️ TOTALLY REAL™ ELECTION SYSTEM */
+/* Government + Frutiger Aero Aesthetic */
+/* "We're professional... but also we made this in 2009" */
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+:root {
+  /* Government Official Colors */
+  --gov-blue: #1a3c6e;
+  --gov-navy: #0f2557;
+  --gov-red: #b22234;
+  --gov-white: #ffffff;
+  
+  /* Frutiger Aero Colors */
+  --aero-glass: rgba(255, 255, 255, 0.3);
+  --aero-glass-border: rgba(255, 255, 255, 0.5);
+  --aero-gloss: rgba(255, 255, 255, 0.6);
+  --aero-blue: #4a9eff;
+  --aero-cyan: #00d4ff;
+  --aero-green: #7ec850;
+  --aero-sunlight: #ffd700;
+  
+  /* Gradients */
+  --aero-gradient: linear-gradient(135deg, #4a9eff 0%, #00d4ff 50%, #7ec850 100%);
+  --glass-gradient: linear-gradient(135deg, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0.1) 100%);
+}
+
 body {
-  font-family: 'Comic Sans MS', 'Arial', sans-serif;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  font-family: 'Segoe UI', 'Arial', sans-serif;
+  background: linear-gradient(180deg, #1a3c6e 0%, #4a9eff 50%, #87ceeb 100%);
   min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Add subtle bubbles for that Aero feel */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 20%, rgba(255,255,255,0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 40%, rgba(255,255,255,0.08) 0%, transparent 40%),
+    radial-gradient(circle at 50% 80%, rgba(255,255,255,0.12) 0%, transparent 45%);
+  pointer-events: none;
+  z-index: 0;
 }
 
 .app {
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
+  position: relative;
+  z-index: 1;
 }
 
-/* Marquee effect for the ticker */
+/* 🏛️ GOVERNMENT HEADER STYLES */
+.gov-header {
+  background: var(--gov-navy);
+  border-bottom: 4px solid var(--gov-red);
+  padding: 20px;
+  margin-bottom: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.gov-header h1 {
+  color: var(--gov-white);
+  font-size: 2.5em;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-align: center;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+/* 💎 FRUTIGER AERO GLASS EFFECTS */
+.glass-panel {
+  background: var(--glass-gradient);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--aero-glass-border);
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 
+    0 8px 32px rgba(0,0,0,0.1),
+    inset 0 1px 0 rgba(255,255,255,0.4);
+  position: relative;
+}
+
+/* Glossy highlight effect */
+.glass-panel::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  background: linear-gradient(180deg, rgba(255,255,255,0.3) 0%, transparent 100%);
+  border-radius: 15px 15px 0 0;
+  pointer-events: none;
+}
+
+/* Glossy buttons */
+.btn {
+  display: inline-block;
+  padding: 12px 24px;
+  border-radius: 25px;
+  border: 1px solid var(--aero-glass-border);
+  background: var(--glass-gradient);
+  color: white;
+  font-weight: bold;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 
+    0 4px 15px rgba(0,0,0,0.2),
+    inset 0 1px 0 rgba(255,255,255,0.5);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Glossy button highlight */
+.btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  transition: left 0.5s;
+}
+
+.btn:hover::before {
+  left: 100%;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 6px 20px rgba(0,0,0,0.3),
+    inset 0 1px 0 rgba(255,255,255,0.5);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #4a9eff, #0066cc);
+  font-size: 1.2em;
+}
+
+.btn-secondary {
+  background: linear-gradient(135deg, #7ec850, #4a9eff);
+}
+
+/* 📊 INTEGRITY SCORE BAR */
+.integrity-score {
+  text-align: center;
+  margin: 30px 0;
+  padding: 20px;
+}
+
+.score-bar {
+  width: 100%;
+  max-width: 400px;
+  height: 25px;
+  background: rgba(0,0,0,0.2);
+  border-radius: 15px;
+  margin: 10px auto;
+  overflow: hidden;
+  border: 1px solid var(--aero-glass-border);
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.score-fill {
+  height: 100%;
+  background: var(--aero-gradient);
+  border-radius: 15px;
+  transition: width 0.5s ease;
+  box-shadow: 
+    0 0 10px rgba(255,255,255,0.5),
+    inset 0 1px 0 rgba(255,255,255,0.5);
+}
+
+.score-number {
+  color: white;
+  font-weight: bold;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+}
+
+/* ⚠️ WARNING BOX */
+.warning-box {
+  background: rgba(178, 34, 52, 0.8);
+  border: 2px solid #ffd700;
+  border-radius: 10px;
+  padding: 15px;
+  margin: 20px 0;
+  color: white;
+  text-align: center;
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+}
+
+.warning-box p {
+  margin: 5px 0;
+}
+
+/* 🎠 MARQUEE TICKER */
+.ticker {
+  background: var(--gov-navy);
+  border: 2px solid var(--aero-glass-border);
+  border-radius: 5px;
+  padding: 10px;
+  margin: 20px 0;
+  overflow: hidden;
+}
+
 .marquee {
   overflow: hidden;
   white-space: nowrap;
   animation: marquee 20s linear infinite;
+  color: #ffd700;
+  font-weight: bold;
 }
 
 @keyframes marquee {
@@ -28,11 +234,86 @@ body {
   100% { transform: translateX(-100%); }
 }
 
-/* Blinking text for important warnings */
+/* 👥 CANDIDATE CARDS */
+.candidate-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin: 20px 0;
+}
+
+.candidate-card {
+  background: var(--glass-gradient);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--aero-glass-border);
+  border-radius: 15px;
+  padding: 20px;
+  text-align: center;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.candidate-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  background: linear-gradient(180deg, rgba(255,255,255,0.3) 0%, transparent 100%);
+  border-radius: 15px 15px 0 0;
+  pointer-events: none;
+}
+
+.candidate-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.candidate-emoji {
+  font-size: 4em;
+  display: block;
+  margin: 10px 0;
+  filter: drop-shadow(0 5px 10px rgba(0,0,0,0.3));
+}
+
+/* ✨ ANIMATIONS */
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
 .blink {
   animation: blink 1s step-end infinite;
 }
 
-@keyframes blink {
-  50% { opacity: 0; }
+/* 💧 Bubble effects */
+.bubble {
+  position: absolute;
+  background: rgba(255,255,255,0.2);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-20px) rotate(180deg); }
+}
+
+/* 📱 RESPONSIVE */
+@media (max-width: 768px) {
+  .gov-header h1 {
+    font-size: 1.8em;
+  }
+  
+  .candidate-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .btn {
+    display: block;
+    text-align: center;
+    margin: 10px 0;
+  }
 }

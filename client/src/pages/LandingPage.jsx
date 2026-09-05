@@ -10,18 +10,26 @@ function LandingPage() {
 
   return (
     <div className="landing-page">
+      {/* Government Header */}
+      <header className="gov-header">
+        <h1>🗳️ Department of Democracy</h1>
+        <p style={{textAlign: 'center', color: '#ffd700', marginTop: '10px'}}>
+          Official Election Portal™ (Not Actually Official)
+        </p>
+      </header>
+
       {/* Hero Section */}
-      <div className="hero">
-        <h1 className="hero-title">
-          🗳️ WELCOME TO THE MOST TRUSTWORTHY ELECTION SYSTEM™
-        </h1>
-        <p className="hero-subtitle">
+      <div className="glass-panel hero">
+        <h2 className="hero-title" style={{color: 'white', textAlign: 'center', marginBottom: '20px'}}>
+          WELCOME TO THE MOST TRUSTWORTHY ELECTION SYSTEM™
+        </h2>
+        <p className="hero-subtitle" style={{color: 'white', textAlign: 'center'}}>
           Built with absolutely no confidence.
         </p>
         
         {/* Integrity Score */}
-        <div className="integrity-score" onClick={randomizeIntegrity}>
-          <p>Election Integrity Score:</p>
+        <div className="integrity-score">
+          <p style={{color: 'white'}}>Election Integrity Score:</p>
           <div className="score-bar">
             <div 
               className="score-fill" 
@@ -32,11 +40,11 @@ function LandingPage() {
         </div>
 
         {/* CTA Buttons */}
-        <div className="cta-buttons">
+        <div style={{textAlign: 'center', margin: '30px 0'}}>
           <Link to="/vote" className="btn btn-primary">
             🗳️ VOTE NOW
           </Link>
-          <Link to="/create" className="btn btn-secondary">
+          <Link to="/create" className="btn btn-secondary" style={{marginLeft: '10px'}}>
             📝 CREATE YOUR OWN ELECTION
           </Link>
         </div>
@@ -59,31 +67,44 @@ function LandingPage() {
       <div className="ticker">
         <div className="marquee">
           🔒 SECURE 🔒 BLOCKCHAIN™ 🔒 ENCRYPTED* 🔒 TRUST US** 🔒 
-          *probably not | **definitely not
+          *probably not | **definitely not | ***The Pigeon is watching
         </div>
       </div>
 
       {/* Sample Candidates */}
-      <div className="candidate-preview">
-        <h2>Current Election: Supreme Leader of the Internet</h2>
+      <div className="glass-panel" style={{marginTop: '30px'}}>
+        <h2 style={{color: 'white', textAlign: 'center', marginBottom: '20px'}}>
+          Current Election: Supreme Leader of the Internet
+        </h2>
         <div className="candidate-grid">
           <div className="candidate-card">
             <span className="candidate-emoji">👨</span>
-            <h3>Uncle Bob</h3>
-            <p>The Sensible Choice™</p>
+            <h3 style={{color: 'white'}}>Uncle Bob</h3>
+            <p style={{color: '#ffd700'}}>The Sensible Choice™</p>
           </div>
           <div className="candidate-card">
             <span className="candidate-emoji">🐦</span>
-            <h3>The Pigeon</h3>
-            <p>Has been eyeing that statue all week</p>
+            <h3 style={{color: 'white'}}>The Pigeon</h3>
+            <p style={{color: '#ffd700'}}>Has been eyeing that statue all week</p>
           </div>
           <div className="candidate-card">
             <span className="candidate-emoji">💻</span>
-            <h3>The CSS Developer</h3>
-            <p>Will center the div, probably</p>
+            <h3 style={{color: 'white'}}>The CSS Developer</h3>
+            <p style={{color: '#ffd700'}}>Will center the div, probably</p>
           </div>
         </div>
       </div>
+
+      {/* Footer */}
+      <footer style={{textAlign: 'center', marginTop: '30px', color: 'white'}}>
+        <p>© 2026 Department of Democracy. All rights reserved. Or not.</p>
+        <p style={{fontSize: '0.8em', marginTop: '10px'}}>
+          BLOCKCHAIN™ | ENCRYPTED* | SECURE** | TRUST US***
+        </p>
+        <p style={{fontSize: '0.7em'}}>
+          *probably not | **definitely not | ***please don't
+        </p>
+      </footer>
     </div>
   )
 }
