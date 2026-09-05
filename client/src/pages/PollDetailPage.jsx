@@ -112,12 +112,15 @@ function PollDetailPage() {
           
           <div style={{display: 'flex', justifyContent: 'center', gap: '20px', marginTop: '15px'}}>
             <span className="badge">
-              <i className="fas fa-clock"></i> {poll.voting_ends_at ? new Date(poll.voting_ends_at).toLocaleString() : 'Never ends'}
+                <i className="fas fa-clock"></i> {poll.voting_ends_at ? new Date(poll.voting_ends_at).toLocaleString() : 'Never ends'}
             </span>
             <span className="badge">
-              <i className="fas fa-shield-alt"></i> Certified by TrustMeBro™
+                <i className="fas fa-shield-alt"></i> Certified by TrustMeBro™
             </span>
-          </div>
+            <Link to={`/admin/${poll.id}`} className="badge" style={{textDecoration: 'none', color: '#c9a84c'}}>
+                <i className="fas fa-user-shield"></i> Admin Panel
+            </Link>
+            </div>
         </div>
 
         <div className="official-notice">

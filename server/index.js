@@ -2,7 +2,8 @@ const express = require('express');
 const cors = require('cors');
 const { initializeDatabase } = require('./database');
 const authRoutes = require('./routes/auth');
-const pollRoutes = require('./routes/polls'); // Make sure this line is here!
+const pollRoutes = require('./routes/polls');
+const adminRoutes = require('./routes/admin');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -39,6 +40,9 @@ app.use('/api/auth', authRoutes);
 
 // Use poll routes - Make sure this line is here!
 app.use('/api/polls', pollRoutes);
+
+// Add after poll routes
+app.use('/api/admin', adminRoutes);
 
 // Start server
 app.listen(PORT, () => {
