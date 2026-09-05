@@ -5,6 +5,8 @@ import LandingPage from './pages/LandingPage'
 import RegisterPage from './pages/RegisterPage'
 import LoginPage from './pages/LoginPage'
 import ForgotPasswordPage from './pages/ForgotPasswordPage'
+import VotePage from './pages/VotePage'
+import CreateElectionPage from './pages/CreateElectionPage'
 import './styles/global.css'
 
 function App() {
@@ -19,6 +21,8 @@ function App() {
               <Route path="/register" element={<RegisterPage />} />
               <Route path="/login" element={<LoginPage />} />
               <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+              <Route path="/vote" element={<VotePage />} />
+              <Route path="/create" element={<CreateElectionPage />} />
             </Routes>
           </div>
         </main>
