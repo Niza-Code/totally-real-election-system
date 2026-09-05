@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
 function CreateElectionPage() {
@@ -18,6 +18,7 @@ function CreateElectionPage() {
   })
   const [message, setMessage] = useState('')
   const [error, setError] = useState('')
+  const [createdPollId, setCreatedPollId] = useState(null)
   const navigate = useNavigate()
 
   const handleInputChange = (e) => {
@@ -60,6 +61,7 @@ function CreateElectionPage() {
     e.preventDefault()
     setMessage('')
     setError('')
+    setCreatedPollId(null)
     
     // Basic validation
     if (!formData.title.trim()) {
@@ -73,16 +75,34 @@ function CreateElectionPage() {
       return
     }
     
-    // Simulate election creation
-    setMessage('Creating your election...')
-    
-    setTimeout(() => {
-      setMessage('Election created successfully! Your election is now live.')
+    try {
+      // Get user ID if logged in
+      const userData = JSON.parse(localStorage.getItem('userData') || 'null')
+      const creatorId = userData?.id || null
       
+      const response = await axios.post('http://localhost:3001/api/polls/create', {
+        title: formData.title,
+        description: formData.description,
+        duration: formData.duration,
+        allowDuplicates: formData.allowDuplicates,
+        allowUndo: formData.allowUndo,
+        showLiveResults: formData.showLiveResults,
+        securityLevel: formData.securityLevel,
+        candidates: validCandidates,
+        creatorId
+      })
+      
+      setCreatedPollId(response.data.poll.id)
+      setMessage('Election created successfully! Redirecting to your election...')
+      
+      // Redirect to the poll page
       setTimeout(() => {
-        navigate('/')
+        navigate(`/poll/${response.data.poll.id}`)
       }, 2000)
-    }, 1500)
+      
+    } catch (err) {
+      setError(err.response?.data?.error || 'Failed to create election. Brian strikes again.')
+    }
   }
 
   return (
@@ -306,7 +326,14 @@ function CreateElectionPage() {
             marginTop: '20px',
             borderLeftColor: message.includes('successfully') ? '#4caf50' : '#c9a84c'
           }}>
-            <p><i className="fas fa-info-circle"></i> {message}</p>
+            <p>
+              <i className="fas fa-info-circle"></i> {message}
+              {createdPollId && (
+                <Link to={`/poll/${createdPollId}`} style={{marginLeft: '10px'}}>
+                  Go to Election →
+                </Link>
+              )}
+            </p>
           </div>
         )}
         

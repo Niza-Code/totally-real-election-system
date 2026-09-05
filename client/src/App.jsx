@@ -7,6 +7,8 @@ import LoginPage from './pages/LoginPage'
 import ForgotPasswordPage from './pages/ForgotPasswordPage'
 import VotePage from './pages/VotePage'
 import CreateElectionPage from './pages/CreateElectionPage'
+import PollDetailPage from './pages/PollDetailPage'
+import ResultsPage from './pages/ResultsPage'
 import './styles/global.css'
 
 function App() {
@@ -23,6 +25,8 @@ function App() {
               <Route path="/forgot-password" element={<ForgotPasswordPage />} />
               <Route path="/vote" element={<VotePage />} />
               <Route path="/create" element={<CreateElectionPage />} />
+              <Route path="/poll/:id" element={<PollDetailPage />} />
+              <Route path="/results" element={<ResultsPage />} />
             </Routes>
           </div>
         </main>

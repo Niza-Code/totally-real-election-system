@@ -44,15 +44,18 @@ function LandingPage() {
 
         {/* CTA Buttons */}
         <div style={{textAlign: 'center', margin: '30px 0'}}>
-          <Link to="/register" className="btn btn-primary" style={{marginRight: '10px'}}>
-            <i className="fas fa-user-plus"></i> Register to Vote
-          </Link>
-          <Link to="/vote" className="btn btn-gold" style={{marginRight: '10px'}}>
-            <i className="fas fa-vote-yea"></i> Vote Now
-          </Link>
-          <Link to="/create" className="btn btn-secondary">
-            <i className="fas fa-plus-circle"></i> Create Election
-          </Link>
+            <Link to="/register" className="btn btn-primary" style={{marginRight: '10px'}}>
+                <i className="fas fa-user-plus"></i> Register to Vote
+            </Link>
+            <Link to="/vote" className="btn btn-gold" style={{marginRight: '10px'}}>
+                <i className="fas fa-vote-yea"></i> Vote Now
+            </Link>
+            <Link to="/create" className="btn btn-secondary" style={{marginRight: '10px'}}>
+                <i className="fas fa-plus-circle"></i> Create Election
+            </Link>
+            <Link to="/results" className="btn btn-secondary">
+                <i className="fas fa-chart-bar"></i> View Results
+            </Link>
         </div>
       </div>
 
