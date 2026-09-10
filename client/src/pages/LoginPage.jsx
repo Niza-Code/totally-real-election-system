@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import { useAuth } from '../context/AuthContext'
 
 function LoginPage() {
   const [username, setUsername] = useState('')
@@ -8,6 +9,7 @@ function LoginPage() {
   const [message, setMessage] = useState('')
   const [error, setError] = useState('')
   const navigate = useNavigate()
+  const { login } = useAuth()
 
   const handleLogin = async (e) => {
     e.preventDefault()
@@ -20,8 +22,8 @@ function LoginPage() {
         password
       })
       
-      localStorage.setItem('fakeToken', response.data.token)
-      localStorage.setItem('userData', JSON.stringify(response.data.user))
+      // Use context login instead of manual localStorage
+      login(response.data.user, response.data.token)
       
       setMessage('Authentication successful. Welcome back, citizen.')
       

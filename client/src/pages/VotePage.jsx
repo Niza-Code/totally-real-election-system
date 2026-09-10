@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react'
+import { useAuth } from '../context/AuthContext'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 
 function VotePage() {
+  const { user, isAuthenticated } = useAuth()
   const [candidates, setCandidates] = useState([
     {
       id: 1,
@@ -55,21 +57,22 @@ function VotePage() {
     setIsSubmitting(true)
     setMessage('')
     
-    // Simulate secure vote transmission
-    setTimeout(() => {
-      const candidate = candidates.find(c => c.id === selectedCandidate)
+    try {
+      const response = await axios.post('http://localhost:3001/api/polls/1/vote', {
+        candidateId: selectedCandidate,
+        voterId: user?.id || null,
+        votedAs: user?.username || 'Anonymous Citizen'
+      })
+      
       setVoteCount(prev => prev + 1)
       setHasVoted(true)
       setIsSubmitting(false)
-      setMessage(`Your vote for ${candidate.name} has been recorded. Thank you for participating in democracy.`)
+      setMessage(response.data.message)
       
-      // Simulate other votes coming in
-      const updatedCandidates = candidates.map(c => ({
-        ...c,
-        votes: c.votes + Math.floor(Math.random() * 50)
-      }))
-      setCandidates(updatedCandidates)
-    }, 2000)
+    } catch (err) {
+      setError('Failed to cast vote. Brian is looking into it.')
+      setIsSubmitting(false)
+    }
   }
 
   const handleUndoVote = () => {
@@ -87,6 +90,27 @@ function VotePage() {
 
   return (
     <div className="vote-page">
+      {!isAuthenticated && (
+        <div className="official-notice warning" style={{marginBottom: '20px'}}>
+          <p>
+            <i className="fas fa-exclamation-triangle"></i>
+            <strong> Not Signed In:</strong> Your vote will be recorded as "Anonymous Citizen" 
+            and won't count toward your personal achievements. 
+            <Link to="/login" style={{marginLeft: '10px', fontWeight: 'bold'}}>
+              Login to vote officially →
+            </Link>
+          </p>
+        </div>
+      )}
+      
+      {isAuthenticated && (
+        <div className="official-notice" style={{marginBottom: '20px', borderLeftColor: '#4caf50'}}>
+          <p>
+            <i className="fas fa-check-circle" style={{color: '#4caf50'}}></i>
+            <strong> Signed in as {user.username}.</strong> Your votes will count toward your achievements.
+          </p>
+        </div>
+      )}
       <div className="official-card">
         <div style={{textAlign: 'center', marginBottom: '30px'}}>
           <i className="fas fa-vote-yea" style={{fontSize: '3rem', color: '#1a3c6e'}}></i>

@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
+import { useAuth } from '../context/AuthContext'
 
 function LeaderboardsPage() {
   const [data, setData] = useState(null)
+  const { isAuthenticated, user } = useAuth()
   const [achievements, setAchievements] = useState(null)
   const [legends, setLegends] = useState([])
   const [chaos, setChaos] = useState(null)
@@ -59,6 +61,15 @@ function LeaderboardsPage() {
 
   return (
     <div className="leaderboards-page">
+        {!isAuthenticated && (
+        <div className="official-notice" style={{marginBottom: '20px'}}>
+          <p>
+            <i className="fas fa-info-circle"></i>
+            <strong> Tip:</strong> Only signed-in users appear in rankings. 
+            Register or login to see yourself on the leaderboards.
+          </p>
+        </div>
+      )}
       {/* Header */}
       <div className="official-card" style={{
         background: 'linear-gradient(135deg, #1a3c6e 0%, #0a1e3d 100%)',

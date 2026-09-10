@@ -1,8 +1,10 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import { useAuth } from '../context/AuthContext'
 
 function CreateElectionPage() {
+  const { user, isAuthenticated } = useAuth()
   const [formData, setFormData] = useState({
     title: '',
     description: '',
@@ -76,10 +78,6 @@ function CreateElectionPage() {
     }
     
     try {
-      // Get user ID if logged in
-      const userData = JSON.parse(localStorage.getItem('userData') || 'null')
-      const creatorId = userData?.id || null
-      
       const response = await axios.post('http://localhost:3001/api/polls/create', {
         title: formData.title,
         description: formData.description,
@@ -89,13 +87,12 @@ function CreateElectionPage() {
         showLiveResults: formData.showLiveResults,
         securityLevel: formData.securityLevel,
         candidates: validCandidates,
-        creatorId
+        creatorId: user?.id || null  // <-- Use context
       })
       
       setCreatedPollId(response.data.poll.id)
       setMessage('Election created successfully! Redirecting to your election...')
       
-      // Redirect to the poll page
       setTimeout(() => {
         navigate(`/poll/${response.data.poll.id}`)
       }, 2000)
@@ -107,6 +104,27 @@ function CreateElectionPage() {
 
   return (
     <div className="create-election-page">
+      {!isAuthenticated && (
+        <div className="official-notice warning" style={{marginBottom: '20px'}}>
+          <p>
+            <i className="fas fa-exclamation-triangle"></i>
+            <strong> Not Signed In:</strong> Your election will be created anonymously 
+            and won't count toward your "Puppet Master" achievement.
+            <Link to="/login" style={{marginLeft: '10px', fontWeight: 'bold'}}>
+              Login to create officially →
+            </Link>
+          </p>
+        </div>
+      )}
+      
+      {isAuthenticated && (
+        <div className="official-notice" style={{marginBottom: '20px', borderLeftColor: '#4caf50'}}>
+          <p>
+            <i className="fas fa-check-circle" style={{color: '#4caf50'}}></i>
+            <strong> Creating as {user.username}.</strong> This election will count toward your achievements.
+          </p>
+        </div>
+      )}
       <div className="official-card">
         <h2>
           <i className="fas fa-plus-circle"></i> Create Official Election

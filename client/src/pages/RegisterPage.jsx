@@ -1,8 +1,10 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import { useAuth } from '../context/AuthContext'
 
 function RegisterPage() {
+  const { login } = useAuth()
   const [formData, setFormData] = useState({
     username: '',
     password: '',
@@ -41,11 +43,19 @@ function RegisterPage() {
         email: formData.email
       })
       
-      setMessage('Registration successful! Your password has been securely stored.')
+      setMessage('Registration successful! Logging you in...')
+      
+      // Auto-login after registration
+      const loginResponse = await axios.post('http://localhost:3001/api/auth/login', {
+        username: formData.username,
+        password: formData.password
+      })
+      
+      login(loginResponse.data.user, loginResponse.data.token)
       
       setTimeout(() => {
-        navigate('/login')
-      }, 2000)
+        navigate('/')
+      }, 1500)
       
     } catch (err) {
       setError(err.response?.data?.error || 'Registration failed. Please try again.')

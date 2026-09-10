@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import axios from 'axios'
+import { useAuth } from '../context/AuthContext'
 
 function PollDetailPage() {
     const { id } = useParams()
+    const { user, isAuthenticated } = useAuth()
     const [poll, setPoll] = useState(null)
     const [candidates, setCandidates] = useState([])
     const [selectedCandidate, setSelectedCandidate] = useState(null)
@@ -34,29 +36,26 @@ function PollDetailPage() {
     }
   }
 
+  
     // Add this function
     const handleDeletePoll = async () => {
     try {
-        const userData = JSON.parse(localStorage.getItem('userData') || 'null')
-        
-        const response = await axios.delete(`http://localhost:3001/api/polls/${id}/community-delete`, {
+      const response = await axios.delete(`http://localhost:3001/api/polls/${id}/community-delete`, {
         data: {
-            deletedBy: userData?.id || null,
-            reason: deleteReason,
-            guiltLevel: guiltLevel
+          deletedBy: user?.id || null,
+          reason: deleteReason,
+          guiltLevel: guiltLevel
         }
-        })
-        
-        alert(response.data.message + ' ' + response.data.guilt)
-        setShowDeleteConfirm(false)
-        
-        // Redirect to hall of shame or home
-        window.location.href = '/hall-of-shame'
-        
+      })
+      
+      alert(response.data.message + ' ' + response.data.guilt)
+      setShowDeleteConfirm(false)
+      window.location.href = '/hall-of-shame'
+      
     } catch (err) {
-        alert('Failed to delete election. Democracy resists.')
+      alert('Failed to delete election. Democracy resists.')
     }
-    }
+  }
 
   const handleVote = async () => {
     if (!selectedCandidate) {
@@ -67,20 +66,16 @@ function PollDetailPage() {
     setMessage('Transmitting vote securely...')
     
     try {
-      const userData = JSON.parse(localStorage.getItem('userData') || 'null')
-      
       const response = await axios.post(`http://localhost:3001/api/polls/${id}/vote`, {
         candidateId: selectedCandidate,
-        voterId: userData?.id || null,
-        votedAs: userData?.username || 'Anonymous Citizen'
+        voterId: user?.id || null,
+        votedAs: user?.username || 'Anonymous Citizen'
       })
       
-      const candidate = candidates.find(c => c.id === selectedCandidate)
       setHasVoted(true)
       setVoteCount(prev => prev + 1)
       setMessage(response.data.message)
       
-      // Refresh poll data
       fetchPoll()
       
     } catch (err) {
@@ -131,6 +126,18 @@ function PollDetailPage() {
 
   return (
     <div className="poll-detail-page">
+      {!isAuthenticated && (
+        <div className="official-notice warning" style={{marginBottom: '20px'}}>
+          <p>
+            <i className="fas fa-exclamation-triangle"></i>
+            <strong> Voting Anonymously:</strong> Your vote will be recorded as "Anonymous Citizen". 
+            Login to have your vote count toward achievements.
+            <Link to="/login" style={{marginLeft: '10px', fontWeight: 'bold'}}>
+              Login →
+            </Link>
+          </p>
+        </div>
+      )}
       <div className="official-card">
         <div style={{textAlign: 'center', marginBottom: '30px'}}>
           <i className="fas fa-vote-yea" style={{fontSize: '3rem', color: '#1a3c6e'}}></i>
