@@ -2,6 +2,61 @@ const express = require('express');
 const router = express.Router();
 const { pool } = require('../database');
 
+// 📋 LIST ALL POLLS - This must come before /:id routes
+router.get('/', async (req, res) => {
+  try {
+    const result = await pool.query(
+      `SELECT p.*, 
+        (SELECT COUNT(*) FROM candidates c WHERE c.poll_id = p.id) as candidate_count,
+        (SELECT COUNT(*) FROM votes v WHERE v.poll_id = p.id AND v.is_undone = false) as vote_count
+       FROM polls p 
+       WHERE p.is_deleted = false 
+       ORDER BY p.created_at DESC`
+    );
+    
+    res.json({
+      polls: result.rows,
+      message: 'Here are all active elections. Vote responsibly. Or don\'t.'
+    });
+    
+  } catch (error) {
+    console.error('List polls error:', error);
+    res.status(500).json({
+      error: 'Failed to fetch elections',
+      hint: 'The democracy is temporarily unavailable'
+    });
+  }
+});
+
+// 📋 HALL OF SHAME - Must come before /:id routes
+router.get('/hall-of-shame', async (req, res) => {
+  try {
+    const result = await pool.query(
+      `SELECT p.*, u.username as deleted_by_name,
+        (SELECT COUNT(*) FROM candidates c WHERE c.poll_id = p.id) as candidate_count,
+        (SELECT COUNT(*) FROM votes v WHERE v.poll_id = p.id) as vote_count
+       FROM polls p
+       LEFT JOIN users u ON p.deleted_by = u.id
+       WHERE p.is_deleted = true
+       ORDER BY p.deleted_at DESC NULLS LAST`
+    );
+    
+    res.json({
+      deleted_polls: result.rows,
+      message: 'These elections were silenced by the community.',
+      philosophical: 'Every deleted election was once full of hope and democracy.'
+    });
+    
+  } catch (error) {
+    console.error('Hall of shame error:', error);
+    res.status(500).json({
+      error: 'Failed to fetch deleted elections',
+      hint: 'Even the dead have technical difficulties',
+      details: error.message
+    });
+  }
+});
+
 // 🗳️ CREATE POLL - Because democracy needs more elections
 router.post('/create', async (req, res) => {
   const { 
@@ -113,9 +168,17 @@ router.post('/create', async (req, res) => {
   }
 });
 
-// 📋 GET SINGLE POLL
+// 📋 GET SINGLE POLL - This comes AFTER specific routes like /hall-of-shame
 router.get('/:id', async (req, res) => {
   const { id } = req.params;
+  
+  // Validate that id is a number
+  if (isNaN(parseInt(id))) {
+    return res.status(400).json({
+      error: 'Invalid election ID',
+      hint: 'That\'s not even a number. Brian is disappointed.'
+    });
+  }
   
   try {
     const pollResult = await pool.query(
@@ -166,7 +229,8 @@ router.get('/:id', async (req, res) => {
     console.error('Get poll error:', error);
     res.status(500).json({
       error: 'Failed to fetch election',
-      hint: 'The server is having an existential crisis'
+      hint: 'The server is having an existential crisis',
+      details: error.message
     });
   }
 });
@@ -283,28 +347,102 @@ router.get('/:id/results', async (req, res) => {
   }
 });
 
-// 📋 LIST ALL POLLS
-router.get('/', async (req, res) => {
+// 🗑️ COMMUNITY DELETION - Because anyone should be able to silence democracy
+router.delete('/:id/community-delete', async (req, res) => {
+  const { id } = req.params;
+  const { deletedBy, reason, guiltLevel } = req.body;
+  
   try {
-    const result = await pool.query(
-      `SELECT p.*, 
-        (SELECT COUNT(*) FROM candidates c WHERE c.poll_id = p.id) as candidate_count,
-        (SELECT COUNT(*) FROM votes v WHERE v.poll_id = p.id AND v.is_undone = false) as vote_count
-       FROM polls p 
-       WHERE p.is_deleted = false 
-       ORDER BY p.created_at DESC`
+    // Check if poll exists
+    const pollResult = await pool.query(
+      'SELECT * FROM polls WHERE id = $1 AND is_deleted = false',
+      [id]
     );
     
+    if (pollResult.rows.length === 0) {
+      return res.status(404).json({
+        error: 'Election not found',
+        hint: 'It may have already been silenced by another concerned citizen'
+      });
+    }
+    
+    // Soft delete the poll (mark as deleted but keep in hall of shame)
+    await pool.query(
+      `UPDATE polls 
+       SET is_deleted = true, deleted_by = $1, deleted_at = NOW() 
+       WHERE id = $2`,
+      [deletedBy || null, id]
+    );
+    
+    // Log this democratic action
+    await pool.query(
+      `INSERT INTO audit_log (poll_id, action, actor) 
+       VALUES ($1, $2, $3)`,
+      [id, `Poll deleted by community member (${reason || 'No reason given'})`, 'Community Member']
+    );
+    
+    const guiltMessages = {
+      none: 'You feel nothing. Interesting.',
+      slight: 'You feel a slight twinge of guilt. It will pass.',
+      moderate: 'You feel moderately guilty. The people are watching.',
+      extreme: 'You are overwhelmed with guilt. Democracy weeps.',
+      sociopath: 'You feel nothing and that concerns us.'
+    };
+    
     res.json({
-      polls: result.rows,
-      message: 'Here are all active elections. Vote responsibly. Or don\'t.'
+      message: 'Election deleted successfully.',
+      warning: 'The people\'s voices have been silenced.',
+      guilt: guiltMessages[guiltLevel] || guiltMessages.moderate,
+      can_undo: true,
+      undo_instructions: 'Visit the Hall of Shame to restore this election if you feel bad.'
     });
     
   } catch (error) {
-    console.error('List polls error:', error);
+    console.error('Community delete error:', error);
     res.status(500).json({
-      error: 'Failed to fetch elections',
-      hint: 'The democracy is temporarily unavailable'
+      error: 'Failed to delete election',
+      hint: 'This election refuses to be silenced',
+      details: error.message
+    });
+  }
+});
+
+// 🔄 RESTORE DELETED POLL - For those who feel guilty
+router.post('/:id/restore', async (req, res) => {
+  const { id } = req.params;
+  const { restoredBy } = req.body;
+  
+  try {
+    const result = await pool.query(
+      'UPDATE polls SET is_deleted = false, deleted_by = NULL, deleted_at = NULL WHERE id = $1 RETURNING *',
+      [id]
+    );
+    
+    if (result.rows.length === 0) {
+      return res.status(404).json({
+        error: 'Election not found',
+        hint: 'It was deleted so hard it no longer exists'
+      });
+    }
+    
+    // Log this restoration
+    await pool.query(
+      `INSERT INTO audit_log (poll_id, action, actor) 
+       VALUES ($1, $2, $3)`,
+      [id, 'Poll restored from deletion', restoredBy || 'Guilty Citizen']
+    );
+    
+    res.json({
+      message: 'Election restored successfully.',
+      celebration: 'Democracy has been resurrected!',
+      forgiveness: 'The people forgive you. Probably.'
+    });
+    
+  } catch (error) {
+    console.error('Restore poll error:', error);
+    res.status(500).json({
+      error: 'Failed to restore election',
+      hint: 'The election is happy in the void'
     });
   }
 });

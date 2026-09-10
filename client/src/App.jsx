@@ -11,6 +11,7 @@ import PollDetailPage from './pages/PollDetailPage'
 import ResultsPage from './pages/ResultsPage'
 import BrowseElectionsPage from './pages/BrowseElectionsPage'
 import AdminPanelPage from './pages/AdminPanelPage'
+import HallOfShamePage from './pages/HallOfShamePage'
 import './styles/global.css'
 
 function App() {
@@ -31,6 +32,7 @@ function App() {
               <Route path="/results" element={<ResultsPage />} />
               <Route path="/browse" element={<BrowseElectionsPage />} />
               <Route path="/admin/:pollId" element={<AdminPanelPage />} />
+              <Route path="/hall-of-shame" element={<HallOfShamePage />} />
             </Routes>
           </div>
         </main>

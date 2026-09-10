@@ -30,9 +30,9 @@ async function initializeDatabase() {
       )
     `);
 
-    // Polls table
+    // Polls table - Add deleted_at column
     await client.query(`
-      CREATE TABLE IF NOT EXISTS polls (
+    CREATE TABLE IF NOT EXISTS polls (
         id SERIAL PRIMARY KEY,
         title TEXT NOT NULL,
         description TEXT,
@@ -42,10 +42,11 @@ async function initializeDatabase() {
         actually_ended_at TIMESTAMP,
         is_deleted BOOLEAN DEFAULT FALSE,
         deleted_by INT REFERENCES users(id),
+        deleted_at TIMESTAMP,
         is_suspicious BOOLEAN DEFAULT FALSE,
         suspicious_count INT DEFAULT 0,
         brian_interference_level INT DEFAULT 3
-      )
+    )
     `);
 
     // Candidates table

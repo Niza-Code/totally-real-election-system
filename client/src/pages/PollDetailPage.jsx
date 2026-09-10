@@ -3,17 +3,20 @@ import { useParams, Link } from 'react-router-dom'
 import axios from 'axios'
 
 function PollDetailPage() {
-  const { id } = useParams()
-  const [poll, setPoll] = useState(null)
-  const [candidates, setCandidates] = useState([])
-  const [selectedCandidate, setSelectedCandidate] = useState(null)
-  const [message, setMessage] = useState('')
-  const [error, setError] = useState('')
-  const [loading, setLoading] = useState(true)
-  const [hasVoted, setHasVoted] = useState(false)
-  const [voteCount, setVoteCount] = useState(0)
-  const [showResults, setShowResults] = useState(false)
-  const [results, setResults] = useState(null)
+    const { id } = useParams()
+    const [poll, setPoll] = useState(null)
+    const [candidates, setCandidates] = useState([])
+    const [selectedCandidate, setSelectedCandidate] = useState(null)
+    const [message, setMessage] = useState('')
+    const [error, setError] = useState('')
+    const [loading, setLoading] = useState(true)
+    const [hasVoted, setHasVoted] = useState(false)
+    const [voteCount, setVoteCount] = useState(0)
+    const [showResults, setShowResults] = useState(false)
+    const [results, setResults] = useState(null)
+    const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
+    const [deleteReason, setDeleteReason] = useState('')
+    const [guiltLevel, setGuiltLevel] = useState('moderate')
 
   useEffect(() => {
     fetchPoll()
@@ -30,6 +33,30 @@ function PollDetailPage() {
       setLoading(false)
     }
   }
+
+    // Add this function
+    const handleDeletePoll = async () => {
+    try {
+        const userData = JSON.parse(localStorage.getItem('userData') || 'null')
+        
+        const response = await axios.delete(`http://localhost:3001/api/polls/${id}/community-delete`, {
+        data: {
+            deletedBy: userData?.id || null,
+            reason: deleteReason,
+            guiltLevel: guiltLevel
+        }
+        })
+        
+        alert(response.data.message + ' ' + response.data.guilt)
+        setShowDeleteConfirm(false)
+        
+        // Redirect to hall of shame or home
+        window.location.href = '/hall-of-shame'
+        
+    } catch (err) {
+        alert('Failed to delete election. Democracy resists.')
+    }
+    }
 
   const handleVote = async () => {
     if (!selectedCandidate) {
@@ -250,6 +277,73 @@ function PollDetailPage() {
           </p>
         </div>
       )}
+
+      
+        <div className="official-card" style={{marginTop: '20px', background: '#fdf2f2'}}>
+        <h3 style={{color: '#8b1a1a'}}>
+            <i className="fas fa-exclamation-triangle"></i> Danger Zone
+        </h3>
+        <p style={{fontSize: '0.9rem', color: '#666'}}>
+            As a community member, you have the power to silence democracy. Use wisely.
+        </p>
+        
+        {!showDeleteConfirm ? (
+            <button 
+            className="btn btn-secondary" 
+            style={{background: '#8b1a1a', color: 'white', borderColor: '#8b1a1a'}}
+            onClick={() => setShowDeleteConfirm(true)}
+            >
+            <i className="fas fa-trash"></i> Delete This Election
+            </button>
+        ) : (
+            <div style={{marginTop: '20px'}}>
+            <p style={{color: '#8b1a1a', fontWeight: 'bold'}}>
+                Are you sure you want to delete this election?
+            </p>
+            <p style={{fontSize: '0.85rem', color: '#666'}}>
+                This action will silence the voices of {poll?.total_votes || 0} voters. 
+                They trusted you. They believed in democracy.
+            </p>
+            
+            <div className="form-group">
+                <label>Reason for Deletion</label>
+                <input
+                type="text"
+                value={deleteReason}
+                onChange={(e) => setDeleteReason(e.target.value)}
+                placeholder="Why are you silencing democracy?"
+                />
+            </div>
+            
+            <div className="form-group">
+                <label>How guilty do you feel?</label>
+                <select value={guiltLevel} onChange={(e) => setGuiltLevel(e.target.value)}>
+                <option value="none">Not guilty at all</option>
+                <option value="slight">Slightly guilty</option>
+                <option value="moderate">Moderately guilty</option>
+                <option value="extreme">Extremely guilty</option>
+                <option value="sociopath">I feel nothing</option>
+                </select>
+            </div>
+            
+            <div style={{display: 'flex', gap: '10px'}}>
+                <button 
+                className="btn btn-secondary" 
+                style={{background: '#8b1a1a', color: 'white', borderColor: '#8b1a1a'}}
+                onClick={handleDeletePoll}
+                >
+                <i className="fas fa-trash"></i> Confirm Deletion
+                </button>
+                <button 
+                className="btn btn-secondary"
+                onClick={() => setShowDeleteConfirm(false)}
+                >
+                <i className="fas fa-times"></i> Cancel (Chicken Out)
+                </button>
+            </div>
+            </div>
+        )}
+        </div>
     </div>
   )
 }
