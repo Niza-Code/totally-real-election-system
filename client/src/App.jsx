@@ -13,6 +13,7 @@ import BrowseElectionsPage from './pages/BrowseElectionsPage'
 import AdminPanelPage from './pages/AdminPanelPage'
 import HallOfShamePage from './pages/HallOfShamePage'
 import './styles/global.css'
+import LeaderboardsPage from './pages/LeaderboardsPage'
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
               <Route path="/browse" element={<BrowseElectionsPage />} />
               <Route path="/admin/:pollId" element={<AdminPanelPage />} />
               <Route path="/hall-of-shame" element={<HallOfShamePage />} />
+              <Route path="/leaderboards" element={<LeaderboardsPage />} />
             </Routes>
           </div>
         </main>

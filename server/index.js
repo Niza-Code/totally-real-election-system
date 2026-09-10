@@ -4,6 +4,7 @@ const { initializeDatabase } = require('./database');
 const authRoutes = require('./routes/auth');
 const pollRoutes = require('./routes/polls');
 const adminRoutes = require('./routes/admin');
+const leaderboardRoutes = require('./routes/leaderboards');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -43,6 +44,9 @@ app.use('/api/polls', pollRoutes);
 
 // Add after poll routes
 app.use('/api/admin', adminRoutes);
+
+// Add after admin routes
+app.use('/api/leaderboards', leaderboardRoutes);
 
 // Start server
 app.listen(PORT, () => {
