@@ -22,7 +22,7 @@ app.get('/', (req, res) => {
     message: '🗳️ Totally Real™ Election System API',
     status: 'Running (probably)',
     integrity: '37%',
-    brian: 'Currently unplugging something',
+    nigel: 'Currently unplugging something',
     endpoints: {
       register: 'POST /api/auth/register',
       login: 'POST /api/auth/login',
@@ -53,6 +53,6 @@ app.listen(PORT, () => {
   console.log(`🗳️ Server running on port ${PORT}`);
   console.log(`🔒 Security level: None`);
   console.log(`🐦 The Pigeon is watching`);
-  console.log(`⚠️ Brian is somewhere near a power cable`);
+  console.log(`⚠️ Nigel is somewhere near a power cable`);
   console.log(`📝 Registration open: Everyone welcome (literally anyone)`);
 });

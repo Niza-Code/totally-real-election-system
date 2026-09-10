@@ -9,7 +9,7 @@ function AdminPanelPage() {
   const [auditLog, setAuditLog] = useState([])
   const [totalVotes, setTotalVotes] = useState(0)
   const [systemStatus, setSystemStatus] = useState(null)
-  const [brianMood, setBrianMood] = useState('')
+  const [nigelMood, setNigelMood] = useState('')
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const [message, setMessage] = useState('')
@@ -32,10 +32,10 @@ function AdminPanelPage() {
       setAuditLog(response.data.audit_log)
       setTotalVotes(response.data.total_votes)
       setSystemStatus(response.data.system_status)
-      setBrianMood(response.data.brian_mood)
+      setNigelMood(response.data.nigel_mood)
       setLoading(false)
     } catch (err) {
-      setError('Failed to load admin panel. Brian is not cooperating.')
+      setError('Failed to load admin panel. Nigel is not cooperating.')
       setLoading(false)
     }
   }
@@ -54,7 +54,7 @@ function AdminPanelPage() {
       fetchAdminData() // Refresh data
       
     } catch (err) {
-      setError(err.response?.data?.error || 'Action failed. Brian strikes again.')
+      setError(err.response?.data?.error || 'Action failed. Nigel strikes again.')
     }
   }
 
@@ -109,8 +109,8 @@ function AdminPanelPage() {
           <div className="stat-value">
             <i className="fas fa-user"></i>
           </div>
-          <div className="stat-label">Brian's Mood</div>
-          <div className="hint">{brianMood}</div>
+          <div className="stat-label">Nigel's Mood</div>
+          <div className="hint">{nigelMood}</div>
         </div>
       </div>
 
@@ -131,10 +131,10 @@ function AdminPanelPage() {
             <i className="fas fa-eraser"></i> Delete Evidence
           </button>
           
-          <button className="btn btn-secondary" onClick={() => handleAction('blame-brian', { 
+          <button className="btn btn-secondary" onClick={() => handleAction('blame-nigel', { 
             incident: 'General incompetence' 
           })}>
-            <i className="fas fa-user-times"></i> Blame Brian
+            <i className="fas fa-user-times"></i> Blame Nigel
           </button>
           
           <button className="btn btn-secondary" onClick={() => handleAction('declare-victory', {

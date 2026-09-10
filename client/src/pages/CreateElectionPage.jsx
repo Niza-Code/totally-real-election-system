@@ -98,7 +98,7 @@ function CreateElectionPage() {
       }, 2000)
       
     } catch (err) {
-      setError(err.response?.data?.error || 'Failed to create election. Brian strikes again.')
+      setError(err.response?.data?.error || 'Failed to create election. Nigel strikes again.')
     }
   }
 
@@ -135,7 +135,7 @@ function CreateElectionPage() {
           <p>
             <i className="fas fa-shield-alt"></i>
             <strong> System Notice:</strong> All elections are monitored for integrity and 
-            security by our automated systems. <em>(Monitored by Brian, who is currently napping.)</em>
+            security by our automated systems. <em>(Monitored by Nigel, who is currently napping.)</em>
           </p>
         </div>
         
@@ -185,7 +185,7 @@ function CreateElectionPage() {
               <option value="1h">1 hour</option>
               <option value="24h">24 hours</option>
               <option value="7d">1 week</option>
-              <option value="forever">Until Brian unplugs it</option>
+              <option value="forever">Until Nigel unplugs it</option>
               <option value="retroactive">End 3 hours ago (retroactive)</option>
             </select>
           </div>

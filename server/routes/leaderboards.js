@@ -47,11 +47,11 @@ router.get('/', async (req, res) => {
       LIMIT 10
     `);
 
-    // Most times blamed Brian
-    const mostBrianBlamed = await pool.query(`
+    // Most times blamed Nigel
+    const mostNigelBlamed = await pool.query(`
       SELECT actor as username, COUNT(*) as blame_count
       FROM audit_log
-      WHERE action LIKE '%Brian%'
+      WHERE action LIKE '%Nigel%'
       GROUP BY actor
       ORDER BY blame_count DESC
       LIMIT 10
@@ -102,7 +102,7 @@ router.get('/', async (req, res) => {
       most_votes_all_time: mostVotesAllTime.rows,
       most_polls_created: mostPollsCreated.rows,
       most_candidates_created: mostCandidatesCreated.rows,
-      most_brian_blamed: mostBrianBlamed.rows,
+      most_nigel_blamed: mostNigelBlamed.rows,
       most_active_voters: mostActiveVoters.rows,
       most_elections_24h: mostElectionsIn24h.rows,
       pigeon_stats: pigeonStats.rows[0],
@@ -166,11 +166,11 @@ router.get('/achievements', async (req, res) => {
       HAVING COUNT(*) >= 3
     `);
 
-    // Brian Enthusiast - Users who blamed Brian 10+ times
-    const brianEnthusiast = await pool.query(`
+    // Nigel Enthusiast - Users who blamed Nigel 10+ times
+    const nigelEnthusiast = await pool.query(`
       SELECT actor as username, COUNT(*) as blame_count
       FROM audit_log
-      WHERE action LIKE '%Brian%'
+      WHERE action LIKE '%Nigel%'
       GROUP BY actor
       HAVING COUNT(*) >= 10
     `);
@@ -193,7 +193,7 @@ router.get('/achievements', async (req, res) => {
       puppet_master: puppetMaster.rows,
       chaos_agent: chaosAgent.rows,
       philanthropist: philanthropist.rows,
-      brian_enthusiast: brianEnthusiast.rows,
+      nigel_enthusiast: nigelEnthusiast.rows,
       pigeon_supporter: pigeonSupporter.rows
     });
 
@@ -219,7 +219,7 @@ router.get('/hall-of-legends', async (req, res) => {
         (SELECT COUNT(*) FROM candidates c 
          JOIN polls p ON c.poll_id = p.id 
          WHERE p.creator_id = u.id) as candidates_created,
-        COALESCE((SELECT COUNT(*) FROM audit_log WHERE actor = u.username AND action LIKE '%Brian%'), 0) as brian_blames,
+        COALESCE((SELECT COUNT(*) FROM audit_log WHERE actor = u.username AND action LIKE '%Nigel%'), 0) as nigel_blames,
         COALESCE((SELECT COUNT(*) FROM audit_log WHERE actor = u.username AND action LIKE '%restored%'), 0) as restorations
       FROM users u
             ORDER BY (
@@ -257,7 +257,7 @@ router.get('/hall-of-legends', async (req, res) => {
         (SELECT COUNT(*) FROM candidates c 
          JOIN polls p ON c.poll_id = p.id 
          WHERE p.creator_id = u.id) as candidates_created,
-        COALESCE((SELECT COUNT(*) FROM audit_log WHERE actor = u.username AND action LIKE '%Brian%'), 0) as brian_blames,
+        COALESCE((SELECT COUNT(*) FROM audit_log WHERE actor = u.username AND action LIKE '%Nigel%'), 0) as nigel_blames,
         COALESCE((SELECT COUNT(*) FROM audit_log WHERE actor = u.username AND action LIKE '%restored%'), 0) as restorations
       FROM users u
       ORDER BY (
@@ -289,7 +289,7 @@ function calculateChaosLevel(metrics) {
     (parseInt(metrics.deleted_polls) * 10) +
     (parseInt(metrics.admin_votes) * 5) +
     (parseInt(metrics.undone_votes) * 2) +
-    (parseInt(metrics.brian_approved_votes) * 3) +
+    (parseInt(metrics.nigel_approved_votes) * 3) +
     (parseInt(metrics.pigeon_candidates) * 7)
   );
 
@@ -297,7 +297,7 @@ function calculateChaosLevel(metrics) {
   if (score < 150) return { level: 'Moderate', color: '#c9a84c', emoji: '😅' };
   if (score < 300) return { level: 'High', color: '#ff9800', emoji: '😰' };
   if (score < 500) return { level: 'Severe', color: '#f44336', emoji: '🔥' };
-  return { level: 'Brian-Level Chaos', color: '#8b1a1a', emoji: '💀' };
+  return { level: 'Nigel-Level Chaos', color: '#8b1a1a', emoji: '💀' };
 }
 
 module.exports = router;

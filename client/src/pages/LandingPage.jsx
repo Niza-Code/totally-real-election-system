@@ -65,7 +65,7 @@ function LandingPage() {
           <i className="fas fa-exclamation-triangle"></i>
           <strong> OFFICIAL NOTICE:</strong> The Department of Democracy is committed to 
           maintaining the highest standards of electoral integrity. Our systems are regularly 
-          audited by independent contractors. <em>(Results may vary. Contractors may be Brian.)</em>
+          audited by independent contractors. <em>(Results may vary. Contractors may be Nigel.)</em>
         </p>
       </div>
 
@@ -130,7 +130,7 @@ function LandingPage() {
           <i className="fas fa-info-circle"></i>
           <strong> Note:</strong> This is a parody website for educational and entertainment 
           purposes only. Please do not use this platform for actual elections. 
-          <em> Unless you really want to see what happens when Brian is in charge.</em>
+          <em> Unless you really want to see what happens when Nigel is in charge.</em>
         </p>
       </div>
     </div>

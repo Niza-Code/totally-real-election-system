@@ -70,7 +70,7 @@ function VotePage() {
       setMessage(response.data.message)
       
     } catch (err) {
-      setError('Failed to cast vote. Brian is looking into it.')
+      setError('Failed to cast vote. Nigel is looking into it.')
       setIsSubmitting(false)
     }
   }
@@ -247,7 +247,7 @@ function VotePage() {
               </div>
             ))}
             <p style={{fontSize: '0.8rem', color: '#6b7280', fontStyle: 'italic', textAlign: 'center', marginTop: '15px'}}>
-              Results are updated in real-time. (Or whenever Brian remembers to plug in the server.)
+              Results are updated in real-time. (Or whenever Nigel remembers to plug in the server.)
             </p>
           </div>
         )}

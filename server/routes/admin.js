@@ -15,7 +15,7 @@ router.get('/dashboard/:pollId', async (req, res) => {
     if (pollResult.rows.length === 0) {
       return res.status(404).json({
         error: 'Election not found',
-        hint: 'It never existed. Or Brian deleted it.'
+        hint: 'It never existed. Or Nigel deleted it.'
       });
     }
     
@@ -49,14 +49,14 @@ router.get('/dashboard/:pollId', async (req, res) => {
       audit_log: auditResult.rows,
       total_votes: parseInt(totalVotes.rows[0].count),
       system_status: getSystemStatus(),
-      brian_mood: getBrianMood()
+      nigel_mood: getNigelMood()
     });
     
   } catch (error) {
     console.error('Admin dashboard error:', error);
     res.status(500).json({
       error: 'Failed to load admin dashboard',
-      hint: 'Brian is having a moment'
+      hint: 'Nigel is having a moment'
     });
   }
 });
@@ -69,7 +69,7 @@ router.post('/add-votes', async (req, res) => {
     // Insert fake votes
     for (let i = 0; i < count; i++) {
       await pool.query(
-        `INSERT INTO votes (poll_id, candidate_id, voted_as, brian_approved) 
+        `INSERT INTO votes (poll_id, candidate_id, voted_as, nigel_approved) 
          VALUES ($1, $2, $3, $4)`,
         [pollId, candidateId, 'Admin (Definitely Legit)', true]
       );
@@ -164,7 +164,7 @@ router.post('/change-winner', async (req, res) => {
     // Add enough votes to make them win
     for (let i = 0; i < votesNeeded; i++) {
       await pool.query(
-        `INSERT INTO votes (poll_id, candidate_id, voted_as, brian_approved) 
+        `INSERT INTO votes (poll_id, candidate_id, voted_as, nigel_approved) 
          VALUES ($1, $2, $3, $4)`,
         [pollId, candidateId, 'Admin (Making Democracy Better)', true]
       );
@@ -216,33 +216,33 @@ router.post('/delete-evidence', async (req, res) => {
   }
 });
 
-// 🎛️ ADMIN - Blame Brian
-router.post('/blame-brian', async (req, res) => {
+// 🎛️ ADMIN - Blame Nigel
+router.post('/blame-nigel', async (req, res) => {
   const { pollId, incident } = req.body;
   
   try {
     await pool.query(
       `INSERT INTO audit_log (poll_id, action, actor) 
        VALUES ($1, $2, $3)`,
-      [pollId, `Brian blamed for: ${incident || 'everything'}`, 'Admin']
+      [pollId, `Nigel blamed for: ${incident || 'everything'}`, 'Admin']
     );
     
-    // Increment Brian's blame counter
+    // Increment Nigel's blame counter
     await pool.query(
-      'UPDATE users SET times_blamed_brian = times_blamed_brian + 1 WHERE is_brian = true'
+      'UPDATE users SET times_blamed_nigel = times_blamed_nigel + 1 WHERE is_nigel = true'
     );
     
     res.json({
-      message: 'Brian has been blamed successfully',
-      brian_response: 'Brian apologizes. He promises to be more careful with the server cables.',
+      message: 'Nigel has been blamed successfully',
+      nigel_response: 'Nigel apologizes. He promises to be more careful with the server cables.',
       acceptance: 'The people have accepted this explanation.'
     });
     
   } catch (error) {
-    console.error('Blame Brian error:', error);
+    console.error('Blame Nigel error:', error);
     res.status(500).json({
-      error: 'Failed to blame Brian',
-      hint: 'Brian is already at maximum blame capacity'
+      error: 'Failed to blame Nigel',
+      hint: 'Nigel is already at maximum blame capacity'
     });
   }
 });
@@ -317,12 +317,12 @@ function getSystemStatus() {
     { status: 'Semi-Operational', color: 'yellow', icon: 'fa-exclamation-triangle' },
     { status: 'Barely Functional', color: 'orange', icon: 'fa-skull' },
     { status: 'Completely Broken', color: 'red', icon: 'fa-times-circle' },
-    { status: 'Brian is Crying', color: 'blue', icon: 'fa-sad-tear' }
+    { status: 'Nigel is Crying', color: 'blue', icon: 'fa-sad-tear' }
   ];
   return statuses[Math.floor(Math.random() * statuses.length)];
 }
 
-function getBrianMood() {
+function getNigelMood() {
   const moods = [
     'Confused but willing',
     'Asleep near the server',

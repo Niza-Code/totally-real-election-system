@@ -25,8 +25,24 @@ The most gloriously broken democracy platform ever created. This is a parody e-v
 DO NOT USE THESE RESULTS TO MAKE REAL-WORLD DECISIONS.
 This system is about as secure as a screen door on a submarine.
 
-## Setup Instructions
-Coming soon (probably)
+## Setup
+
+### Backend
+```bash
+cd server
+npm install
+npm run dev
+
+### Backend
+```bash
+cd client
+npm install
+npm run dev
+
+### Backend
+```bash
+cd server
+npm run seed
 
 ## Contributors
 - You (the voter)

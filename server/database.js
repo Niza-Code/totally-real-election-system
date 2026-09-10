@@ -23,9 +23,9 @@ async function initializeDatabase() {
         email TEXT,
         created_at TIMESTAMP DEFAULT NOW(),
         is_admin BOOLEAN DEFAULT FALSE,
-        is_brian BOOLEAN DEFAULT FALSE,
+        is_nigel BOOLEAN DEFAULT FALSE,
         total_votes_cast INT DEFAULT 0,
-        times_blamed_brian INT DEFAULT 0,
+        times_blamed_nigel INT DEFAULT 0,
         favorite_candidate TEXT DEFAULT 'The Pigeon'
       )
     `);
@@ -45,7 +45,7 @@ async function initializeDatabase() {
         deleted_at TIMESTAMP,
         is_suspicious BOOLEAN DEFAULT FALSE,
         suspicious_count INT DEFAULT 0,
-        brian_interference_level INT DEFAULT 3
+        nigel_interference_level INT DEFAULT 3
     )
     `);
 
@@ -74,7 +74,7 @@ async function initializeDatabase() {
         undone_at TIMESTAMP,
         times_changed INT DEFAULT 0,
         cast_on_behalf_of TEXT,
-        brian_approved BOOLEAN DEFAULT FALSE
+        nigel_approved BOOLEAN DEFAULT FALSE
       )
     `);
 

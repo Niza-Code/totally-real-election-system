@@ -105,7 +105,7 @@ router.post('/login', async (req, res) => {
         username: user.username,
         email: user.email,
         is_admin: user.is_admin,
-        is_brian: user.is_brian
+        is_nigel: user.is_nigel
       },
       security_note: 'This "token" is just base64 encoded. Anyone can decode it. We trust everyone.'
     });
@@ -114,7 +114,7 @@ router.post('/login', async (req, res) => {
     console.error('Login error:', error);
     res.status(500).json({
       error: 'Something went wrong',
-      hint: 'Brian probably unplugged the server again.'
+      hint: 'Nigel probably unplugged the server again.'
     });
   }
 });

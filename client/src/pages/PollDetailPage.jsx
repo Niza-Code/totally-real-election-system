@@ -79,7 +79,7 @@ function PollDetailPage() {
       fetchPoll()
       
     } catch (err) {
-      setError(err.response?.data?.error || 'Failed to cast vote. Brian is looking into it.')
+      setError(err.response?.data?.error || 'Failed to cast vote. Nigel is looking into it.')
     }
   }
 

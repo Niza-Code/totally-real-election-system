@@ -107,7 +107,7 @@ router.post('/create', async (req, res) => {
     
     // Insert poll
     const pollResult = await client.query(
-      `INSERT INTO polls (title, description, creator_id, voting_ends_at, brian_interference_level) 
+      `INSERT INTO polls (title, description, creator_id, voting_ends_at, nigel_interference_level) 
        VALUES ($1, $2, $3, $4, $5) 
        RETURNING id, title, description, voting_ends_at`,
       [title, description || '', creatorId || null, votingEndsAt, Math.floor(Math.random() * 5) + 1]
@@ -160,7 +160,7 @@ router.post('/create', async (req, res) => {
     console.error('Create poll error:', error);
     res.status(500).json({
       error: 'Failed to create election',
-      hint: 'Brian probably dropped the database',
+      hint: 'Nigel probably dropped the database',
       details: error.message
     });
   } finally {
@@ -176,7 +176,7 @@ router.get('/:id', async (req, res) => {
   if (isNaN(parseInt(id))) {
     return res.status(400).json({
       error: 'Invalid election ID',
-      hint: 'That\'s not even a number. Brian is disappointed.'
+      hint: 'That\'s not even a number. Nigel is disappointed.'
     });
   }
   
@@ -189,7 +189,7 @@ router.get('/:id', async (req, res) => {
     if (pollResult.rows.length === 0) {
       return res.status(404).json({
         error: 'Election not found',
-        hint: 'It may have been deleted by the community. Or Brian.'
+        hint: 'It may have been deleted by the community. Or Nigel.'
       });
     }
     
@@ -256,12 +256,12 @@ router.post('/:id/vote', async (req, res) => {
     if (pollResult.rows.length === 0) {
       return res.status(404).json({
         error: 'Election not found',
-        hint: 'It vanished. Blame Brian.'
+        hint: 'It vanished. Blame Nigel.'
       });
     }
     
     const voteResult = await pool.query(
-      `INSERT INTO votes (poll_id, candidate_id, voter_id, voted_as, brian_approved) 
+      `INSERT INTO votes (poll_id, candidate_id, voter_id, voted_as, nigel_approved) 
        VALUES ($1, $2, $3, $4, $5) 
        RETURNING id`,
       [id, candidateId, voterId || null, votedAs || 'Anonymous Citizen', Math.random() > 0.5]
@@ -283,7 +283,7 @@ router.post('/:id/vote', async (req, res) => {
     console.error('Vote error:', error);
     res.status(500).json({
       error: 'Failed to record vote',
-      hint: 'The ballot box has been lost. Check Brian\'s office.'
+      hint: 'The ballot box has been lost. Check Nigel\'s office.'
     });
   }
 });
@@ -303,8 +303,8 @@ router.get('/:id/results', async (req, res) => {
       [id]
     );
     
-    const brianModes = ['actual', 'random', 'boosted', 'suppressed', 'vibes'];
-    const selectedMode = brianModes[Math.floor(Math.random() * brianModes.length)];
+    const nigelModes = ['actual', 'random', 'boosted', 'suppressed', 'vibes'];
+    const selectedMode = nigelModes[Math.floor(Math.random() * nigelModes.length)];
     
     let adjustedResults = results.rows.map(candidate => {
       let adjustedCount = parseInt(candidate.vote_count);
@@ -334,7 +334,7 @@ router.get('/:id/results', async (req, res) => {
     res.json({
       results: adjustedResults,
       total_displayed: adjustedResults.reduce((a, b) => a + b.displayed_votes, 0),
-      brian_mode: selectedMode,
+      nigel_mode: selectedMode,
       note: `Results calculated using ${selectedMode} methodology. Trust us.`
     });
     

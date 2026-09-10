@@ -251,13 +251,13 @@ function LeaderboardsPage() {
             )}
           </div>
 
-          {/* Most Brian Blamed */}
+          {/* Most Nigel Blamed */}
           <div className="official-card" style={{marginTop: '20px'}}>
-            <h3><i className="fas fa-user-times"></i> Most Times Blamed Brian</h3>
-            {data.most_brian_blamed.length === 0 ? (
-              <p style={{color: '#6b7280'}}>Brian has not been blamed yet. Impressive.</p>
+            <h3><i className="fas fa-user-times"></i> Most Times Blamed Nigel</h3>
+            {data.most_nigel_blamed.length === 0 ? (
+              <p style={{color: '#6b7280'}}>Nigel has not been blamed yet. Impressive.</p>
             ) : (
-              data.most_brian_blamed.map((entry, index) => (
+              data.most_nigel_blamed.map((entry, index) => (
                 <div key={index} style={{
                   display: 'flex',
                   justifyContent: 'space-between',
@@ -346,11 +346,11 @@ function LeaderboardsPage() {
           />
           
           <AchievementCard 
-            title="Brian Enthusiast" 
+            title="Nigel Enthusiast" 
             icon="fa-user-times"
             color="#795548"
-            description="Blamed Brian 10+ times. He's used to it by now."
-            achievers={achievements.brian_enthusiast}
+            description="Blamed Nigel 10+ times. He's used to it by now."
+            achievers={achievements.nigel_enthusiast}
             field="username"
             extraField={(entry) => `${entry.blame_count} blames`}
           />
@@ -389,7 +389,7 @@ function LeaderboardsPage() {
                     <th style={{padding: '10px', textAlign: 'center'}}>Polls</th>
                     <th style={{padding: '10px', textAlign: 'center'}}>Votes</th>
                     <th style={{padding: '10px', textAlign: 'center'}}>Candidates</th>
-                    <th style={{padding: '10px', textAlign: 'center'}}>Brian Blames</th>
+                    <th style={{padding: '10px', textAlign: 'center'}}>Nigel Blames</th>
                     <th style={{padding: '10px', textAlign: 'center'}}>Restorations</th>
                   </tr>
                 </thead>
@@ -401,7 +401,7 @@ function LeaderboardsPage() {
                       <td style={{padding: '10px', textAlign: 'center'}}>{legend.polls_created}</td>
                       <td style={{padding: '10px', textAlign: 'center'}}>{legend.votes_cast}</td>
                       <td style={{padding: '10px', textAlign: 'center'}}>{legend.candidates_created}</td>
-                      <td style={{padding: '10px', textAlign: 'center', color: '#8b1a1a'}}>{legend.brian_blames}</td>
+                      <td style={{padding: '10px', textAlign: 'center', color: '#8b1a1a'}}>{legend.nigel_blames}</td>
                       <td style={{padding: '10px', textAlign: 'center', color: '#4caf50'}}>{legend.restorations}</td>
                     </tr>
                   ))}

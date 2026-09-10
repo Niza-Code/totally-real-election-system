@@ -12,13 +12,13 @@ function Footer() {
             <h4>Quick Links</h4>
             <p>Vote Now</p>
             <p>Election Results</p>
-            <p>Report an Issue (Brian will ignore it)</p>
+            <p>Report an Issue (Nigel will ignore it)</p>
           </div>
           <div>
             <h4>Contact</h4>
             <p>Email: democracy@totally-real.gov</p>
             <p>Phone: 1-800-VOTE-NOW</p>
-            <p>Hours: Whenever Brian feels like it</p>
+            <p>Hours: Whenever Nigel feels like it</p>
           </div>
         </div>
         

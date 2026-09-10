@@ -142,7 +142,7 @@ function RegisterPage() {
             </label>
             <div className="hint">
               By checking this box, you agree to let us store your password in plain text, 
-              share your data with third parties, and occasionally blame Brian for system failures.
+              share your data with third parties, and occasionally blame Nigel for system failures.
             </div>
           </div>
           

@@ -157,7 +157,7 @@ function ResultsPage() {
             </div>
           </div>
 
-          {/* Brian Mode Indicator */}
+          {/* Nigel Mode Indicator */}
           <div className="official-notice" style={{marginBottom: '20px'}}>
             <p>
               <i className="fas fa-robot"></i>
