@@ -64,19 +64,20 @@ async function initializeDatabase() {
 
     // Votes table
     await client.query(`
-      CREATE TABLE IF NOT EXISTS votes (
-        id SERIAL PRIMARY KEY,
-        poll_id INT REFERENCES polls(id),
-        candidate_id INT REFERENCES candidates(id),
-        voter_id INT REFERENCES users(id),
-        voted_as TEXT,
-        is_undone BOOLEAN DEFAULT FALSE,
-        undone_at TIMESTAMP,
-        times_changed INT DEFAULT 0,
-        cast_on_behalf_of TEXT,
-        nigel_approved BOOLEAN DEFAULT FALSE
-      )
-    `);
+  CREATE TABLE IF NOT EXISTS votes (
+    id SERIAL PRIMARY KEY,
+    poll_id INT REFERENCES polls(id),
+    candidate_id INT REFERENCES candidates(id),
+    voter_id INT REFERENCES users(id),
+    voted_as TEXT,
+    is_undone BOOLEAN DEFAULT FALSE,
+    undone_at TIMESTAMP,
+    times_changed INT DEFAULT 0,
+    cast_on_behalf_of TEXT,
+    nigel_approved BOOLEAN DEFAULT FALSE,
+    created_at TIMESTAMP DEFAULT NOW()
+  )
+`);
 
     // Audit log for comedy
     await client.query(`

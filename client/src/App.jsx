@@ -14,6 +14,8 @@ import AdminPanelPage from './pages/AdminPanelPage'
 import HallOfShamePage from './pages/HallOfShamePage'
 import './styles/global.css'
 import LeaderboardsPage from './pages/LeaderboardsPage'
+import NigelPage from './pages/NigelPage'
+import PigeonPage from './pages/PigeonPage'
 
 function App() {
   return (
@@ -35,6 +37,8 @@ function App() {
               <Route path="/admin/:pollId" element={<AdminPanelPage />} />
               <Route path="/hall-of-shame" element={<HallOfShamePage />} />
               <Route path="/leaderboards" element={<LeaderboardsPage />} />
+              <Route path="/nigel" element={<NigelPage />} />
+              <Route path="/pigeon" element={<PigeonPage />} />
             </Routes>
           </div>
         </main>

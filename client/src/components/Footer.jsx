@@ -1,3 +1,5 @@
+import { Link, useLocation, useNavigate } from 'react-router-dom'
+
 function Footer() {
   return (
     <footer className="gov-footer">
@@ -10,6 +12,12 @@ function Footer() {
           </div>
           <div>
             <h4>Quick Links</h4>
+            <Link to="/nigel" style={{color: '#b8c4d8', textDecoration: 'none', display: 'block', marginBottom: '5px'}}>
+              Nigel's Page
+            </Link>
+            <Link to="/pigeon" style={{color: '#b8c4d8', textDecoration: 'none', display: 'block', marginBottom: '5px'}}>
+              The Pigeon's Campaign
+            </Link>
             <p>Vote Now</p>
             <p>Election Results</p>
             <p>Report an Issue (Nigel will ignore it)</p>

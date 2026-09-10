@@ -5,6 +5,8 @@ const authRoutes = require('./routes/auth');
 const pollRoutes = require('./routes/polls');
 const adminRoutes = require('./routes/admin');
 const leaderboardRoutes = require('./routes/leaderboards');
+const nigelRoutes = require('./routes/nigel');
+const pigeonRoutes = require('./routes/pigeon');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -47,6 +49,12 @@ app.use('/api/admin', adminRoutes);
 
 // Add after admin routes
 app.use('/api/leaderboards', leaderboardRoutes);
+
+// Add after leaderboards routes
+app.use('/api/nigel', nigelRoutes);
+
+// Add after nigel routes
+app.use('/api/pigeon', pigeonRoutes);
 
 // Start server
 app.listen(PORT, () => {

@@ -63,6 +63,12 @@ function Header() {
           <Link to="/hall-of-shame" className={location.pathname === '/hall-of-shame' ? 'active' : ''}>
             <i className="fas fa-ghost"></i> Hall of Shame
           </Link>
+          <Link to="/nigel" className={location.pathname === '/nigel' ? 'active' : ''}>
+            <i className="fas fa-user-tie"></i> Nigel
+          </Link>
+          <Link to="/pigeon" className={location.pathname === '/pigeon' ? 'active' : ''}>
+            <i className="fas fa-dove"></i> The Pigeon
+          </Link>
           <Link to="/about" className={location.pathname === '/about' ? 'active' : ''}>
             <i className="fas fa-info-circle"></i> About
           </Link>
